@@ -9,6 +9,20 @@ jobs:
         with:
         persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      
+      - name: Install poetry
+        run: curl -sSL https://install.python-poetry.org | python3 - --version 1.2.0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          cache: 'poetry'
+
+      - name: create local changes
+        run: |
+          poetry run python -m src.run
+
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
